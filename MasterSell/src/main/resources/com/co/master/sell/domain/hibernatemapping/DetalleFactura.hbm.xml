@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/07/2016 09:30:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.co.master.sell.domain.entities.DetalleFactura" table="detalle_factura" catalog="master_sell" optimistic-lock="version">
+        <composite-id name="id" class="com.co.master.sell.domain.entities.DetalleFacturaId">
+            <key-property name="factura" type="string">
+                <column name="factura" length="30" />
+            </key-property>
+            <key-property name="articulo" type="int">
+                <column name="articulo" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="articulo" class="com.co.master.sell.domain.entities.Articulo" update="false" insert="false" fetch="select">
+            <column name="articulo" not-null="true" />
+        </many-to-one>
+        <many-to-one name="factura" class="com.co.master.sell.domain.entities.Factura" update="false" insert="false" fetch="select">
+            <column name="factura" length="30" not-null="true" />
+        </many-to-one>
+        <property name="cantidad" type="int">
+            <column name="cantidad" not-null="true" />
+        </property>
+        <property name="total" type="big_decimal">
+            <column name="total" precision="10" not-null="true" />
+        </property>
+        <set name="devolucions" table="devolucion" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura" length="30" not-null="true" />
+                <column name="articulo" not-null="true" />
+            </key>
+            <one-to-many class="com.co.master.sell.domain.entities.Devolucion" />
+        </set>
+    </class>
+</hibernate-mapping>

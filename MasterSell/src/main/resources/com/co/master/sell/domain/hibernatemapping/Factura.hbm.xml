@@ -1,0 +1,37 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/07/2016 09:30:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.co.master.sell.domain.entities.Factura" table="factura" catalog="master_sell" optimistic-lock="version">
+        <id name="idFactura" type="string">
+            <column name="id_factura" length="30" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="cliente" class="com.co.master.sell.domain.entities.Cliente" fetch="select">
+            <column name="dni_cliente" length="15" not-null="true" />
+            <column name="tipo_doc_cliente" not-null="true" />
+        </many-to-one>
+        <many-to-one name="formaPago" class="com.co.master.sell.domain.entities.FormaPago" fetch="select">
+            <column name="forma_pago" not-null="true" />
+        </many-to-one>
+        <many-to-one name="vendedor" class="com.co.master.sell.domain.entities.Vendedor" fetch="select">
+            <column name="codigo_vendedor" not-null="true" />
+        </many-to-one>
+        <property name="fechaVenta" type="date">
+            <column name="fecha_venta" length="10" not-null="true" />
+        </property>
+        <property name="totalVenta" type="big_decimal">
+            <column name="total_venta" precision="10" not-null="true" />
+        </property>
+        <property name="iva" type="big_decimal">
+            <column name="IVA" precision="10" />
+        </property>
+        <set name="detalleFacturas" table="detalle_factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="factura" length="30" not-null="true" />
+            </key>
+            <one-to-many class="com.co.master.sell.domain.entities.DetalleFactura" />
+        </set>
+    </class>
+</hibernate-mapping>

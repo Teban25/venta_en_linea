@@ -1,0 +1,41 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/07/2016 09:30:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.co.master.sell.domain.entities.Provedor" table="provedor" catalog="master_sell" optimistic-lock="version">
+        <composite-id name="id" class="com.co.master.sell.domain.entities.ProvedorId">
+            <key-property name="dni" type="string">
+                <column name="dni" length="15" />
+            </key-property>
+            <key-property name="tipoDocumento" type="int">
+                <column name="tipo_documento" />
+            </key-property>
+        </composite-id>
+        <many-to-one name="ciudad" class="com.co.master.sell.domain.entities.Ciudad" fetch="select">
+            <column name="ciudad" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tiposDocumento" class="com.co.master.sell.domain.entities.TiposDocumento" update="false" insert="false" fetch="select">
+            <column name="tipo_documento" not-null="true" />
+        </many-to-one>
+        <property name="nombreComercial" type="string">
+            <column name="nombre_comercial" length="30" not-null="true" />
+        </property>
+        <property name="direccion" type="string">
+            <column name="direccion" length="30" not-null="true" />
+        </property>
+        <property name="telefono" type="string">
+            <column name="telefono" length="15" not-null="true" />
+        </property>
+        <property name="telefono2" type="string">
+            <column name="telefono2" length="15" />
+        </property>
+        <set name="articulos" table="articulo" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="dni_provedor" length="15" not-null="true" />
+                <column name="tipo_dni_provedor" not-null="true" />
+            </key>
+            <one-to-many class="com.co.master.sell.domain.entities.Articulo" />
+        </set>
+    </class>
+</hibernate-mapping>

@@ -1,0 +1,40 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/07/2016 09:30:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.co.master.sell.domain.entities.Articulo" table="articulo" catalog="master_sell" optimistic-lock="version">
+        <id name="idArticulo" type="int">
+            <column name="id_articulo" />
+            <generator class="assigned" />
+        </id>
+        <many-to-one name="provedor" class="com.co.master.sell.domain.entities.Provedor" fetch="select">
+            <column name="dni_provedor" length="15" not-null="true" />
+            <column name="tipo_dni_provedor" not-null="true" />
+        </many-to-one>
+        <many-to-one name="tipoArticulo" class="com.co.master.sell.domain.entities.TipoArticulo" fetch="select">
+            <column name="tipo_articulo" not-null="true" />
+        </many-to-one>
+        <property name="descripcion" type="string">
+            <column name="descripcion" length="45" not-null="true" />
+        </property>
+        <property name="precioVenta" type="big_decimal">
+            <column name="precio_venta" precision="10" not-null="true" />
+        </property>
+        <property name="precioCosto" type="big_decimal">
+            <column name="precio_costo" precision="10" not-null="true" />
+        </property>
+        <property name="stock" type="int">
+            <column name="stock" not-null="true" />
+        </property>
+        <property name="fechaRegistro" type="date">
+            <column name="fecha_registro" length="10" not-null="true" />
+        </property>
+        <set name="detalleFacturas" table="detalle_factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="articulo" not-null="true" />
+            </key>
+            <one-to-many class="com.co.master.sell.domain.entities.DetalleFactura" />
+        </set>
+    </class>
+</hibernate-mapping>

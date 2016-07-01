@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://www.hibernate.org/dtd/hibernate-mapping-3.0.dtd">
+<!-- Generated 1/07/2016 09:30:21 AM by Hibernate Tools 4.3.1 -->
+<hibernate-mapping>
+    <class name="com.co.master.sell.domain.entities.Vendedor" table="vendedor" catalog="master_sell" optimistic-lock="version">
+        <id name="codigoVendedor" type="int">
+            <column name="codigo_vendedor" />
+            <generator class="assigned" />
+        </id>
+        <property name="dni" type="string">
+            <column name="dni" length="15" not-null="true" />
+        </property>
+        <property name="nombres" type="string">
+            <column name="nombres" length="30" not-null="true" />
+        </property>
+        <property name="apellidos" type="string">
+            <column name="apellidos" length="30" not-null="true" />
+        </property>
+        <property name="celular" type="string">
+            <column name="celular" length="15" not-null="true" />
+        </property>
+        <set name="facturas" table="factura" inverse="true" lazy="true" fetch="select">
+            <key>
+                <column name="codigo_vendedor" not-null="true" />
+            </key>
+            <one-to-many class="com.co.master.sell.domain.entities.Factura" />
+        </set>
+    </class>
+</hibernate-mapping>
